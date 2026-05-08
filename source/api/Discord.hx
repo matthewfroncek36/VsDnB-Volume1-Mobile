@@ -20,6 +20,7 @@ enum RPCType
 	CUSTOM(details:String, ?state:String, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float, largeImageKey:String);
 }
 
+#if desktop
 /**
  * Handles the API for adding, and changing Discord Rich Presence.
  */
@@ -263,7 +264,6 @@ class DiscordClient
 	}
 }
 
-#if desktop
 @:allow(util.Discord.DiscordClient)
 private final class DiscordPresence
 {
