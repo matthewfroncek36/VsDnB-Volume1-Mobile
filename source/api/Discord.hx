@@ -2,8 +2,10 @@ package api;
 
 import Sys;
 import flixel.util.FlxStringUtil;
+#if desktop
 import hxdiscord_rpc.Discord;
 import hxdiscord_rpc.Types;
+#end
 import lime.app.Application;
 import sys.thread.Thread;
 
