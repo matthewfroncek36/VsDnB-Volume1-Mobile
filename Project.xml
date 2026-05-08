@@ -3,14 +3,14 @@
 
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="VS. Dave and Bambi" file="VsDave" packageName="dnbteam.daveandbambi" package="dnbteam.daveandbambi" main="Main" version="1.0.11" company="dnbteam"/>
+	<app title="VS. Dave and Bambi" file="VsDave" packageName="com.dnbteam.daveandbambi" package="com.dnbteam.daveandbambi" main="Main" version="1.0.11" company="dnbteam"/>
 	<app preloader="flixel.system.FlxPreloader"/>
 	<set name="SWF_VERSION" value="11.8"/>
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<!--These window settings apply to all targets-->
-	<window width="1280" height="720" fps="120" hardware="true" vsync="true" background="0x0000ffff" allow-high-dpi="true" />
+	<window width="1280" height="720" fps="60" hardware="true" vsync="true" background="0x0000ffff" allow-high-dpi="true" />
 
 	<!--macOS-->
 	<window if="mac" orientation="auto" fullscreen="false" resizable="true" vsync="false" allow-high-dpi="false" />
@@ -23,7 +23,7 @@
 
 
 	<!--Mobile-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false"/>
+	<window if="mobile" orientation="landscape" fullscreen="true" resizable="false" allow-shaders="true" require-shaders="true"/>
 	<!-- _____________________________ Path Settings ____________________________ -->
 
 	<classpath name="source" />
@@ -83,7 +83,7 @@
 
 	<haxelib name="flixel" />
 	<haxelib name="flixel-addons" />
-	<haxelib name="hxvlc" if="desktop || android" />
+	<haxelib name="hxvlc" if="desktop || mobile" />
 	<haxelib name="hscript" />
 	<haxelib name="polymod" />
 	<haxelib name="json2object" />
@@ -157,6 +157,13 @@
 
 	<!-- _________________________________ Custom _______________________________ -->
 
+	<!-- Do whatever you want I'm tired uninstall and install everytime -->
+	<certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" if="android" unless="debug" />
+	
+	<!-- Allow Access to Engine Files in MOBILE -->
+	<haxedef name="SHARE_MOBILE_FILES" if="mobile" />
+	<haxedef name="lime_use_old_deltatime" />
+	
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 	
 	<icon path="art/icons/dave16.png" size='16'/>

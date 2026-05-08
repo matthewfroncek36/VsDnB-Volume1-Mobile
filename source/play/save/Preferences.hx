@@ -48,9 +48,11 @@ class Preferences
 		'language' => 'en-US',
 
 		'vsync' => true,
-		'fps' => 144,
+		'fps' => 60,
 		'borderless' => false,
 		'darkMode' => false,
+		
+		'storageType' => 'EXTERNAL',
 	];
 
 	/**
@@ -469,7 +471,7 @@ class Preferences
 			#else
 			// For some reason displayMode.refreshRate returns 0 on linux, so we leave this at 144.
 			// TODO: Find a way to get the linux refresh rate.
-			var refreshRate:Int = 144;
+			var refreshRate:Int = 60;
 			#end
 			
 			// Set the FPS to just the monitor's refresh rate if Vsync is on.
@@ -509,7 +511,7 @@ class Preferences
 			#if !linux
 			var refreshRate:Int = FlxG.stage.window.displayMode.refreshRate;
 			#else
-			var refreshRate:Int = 144;
+			var refreshRate:Int = 60;
 			#end
 			
 			FlxG.updateFramerate = refreshRate;
@@ -580,5 +582,20 @@ class Preferences
 	static function get_darkMode():Bool
 	{
 		return save?.data?.darkMode;
+	}
+	
+	public static var storageType(get, set):String;
+
+	static function set_storageType(value:String):String
+	{
+		save.data.storageType = value;
+		save.flush();
+		onPreferenceChanged.dispatch('storageType', value);
+		return value;
+	}
+
+	static function get_storageType():String
+	{
+		return save?.data?.storageType;
 	}
 }

@@ -21,7 +21,7 @@ class Main extends Sprite
 {
 	public static var VERSION:String = '1.0.9';
 	
-	public static var frameRate:Int = 144;
+	public static var frameRate:Int = 60;
 
 	var gameWidth:Int = 1280;
 	var gameHeight:Int = 720;
@@ -38,10 +38,21 @@ class Main extends Sprite
 	public static function main():Void
 	{
 		Lib.current.addChild(new Main());
+		#if cpp
+		cpp.NativeGc.enable(true);
+		cpp.NativeGc.run(true);
+		#end
 	}
 
 	public function new()
 	{
+		#if mobile
+		#if android
+		StorageUtil.requestPermissions();
+		#end
+		Sys.setCwd(StorageUtil.getStorageDirectory());
+		#end
+		
 		super();
 		stage != null ? init() : addEventListener(Event.ADDED_TO_STAGE, init);
 	}
@@ -67,18 +78,7 @@ class Main extends Sprite
 		var fpsFormat = new TextFormat("Comic Sans MS Bold", 15, 0xFFFFFF, true);
 		fps.defaultTextFormat = fpsFormat;
 
-		var stageWidth:Int = Lib.current.stage.stageWidth;
-		var stageHeight:Int = Lib.current.stage.stageHeight;
-
-		if (zoom == -1)
-		{
-			var ratioX:Float = stageWidth / gameWidth;
-			var ratioY:Float = stageHeight / gameHeight;
-			zoom = Math.min(ratioX, ratioY);
-			gameWidth = Math.ceil(stageWidth / zoom);
-			gameHeight = Math.ceil(stageHeight / zoom);
-		}
-		var game = new FlxGame(gameWidth, gameHeight, initialState, #if (flixel < "5.0.0") zoom, #end frameRate, frameRate, true, startFullscreen);
+		var game = new FlxGame(gameWidth, gameHeight, initialState, frameRate, frameRate, true, startFullscreen);
 
 		@:privateAccess
 		game._customSoundTray = GameSoundTray;
@@ -87,6 +87,10 @@ class Main extends Sprite
 		untyped FlxG.cameras = new GameCameraFrontEnd();
 
 		addChild(game);
-		addChild(fps);
+		FlxG.game.addChild(fps);
+		
+		#if android
+		FlxG.android.preventDefaultKeys = [BACK]; 
+		#end
 	}
 }
