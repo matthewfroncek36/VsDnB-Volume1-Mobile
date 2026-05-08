@@ -46,11 +46,10 @@ class Main extends Sprite
 
 	public function new()
 	{
-		#if mobile
 		#if android
-		StorageUtil.requestPermissions();
-		#end
-		Sys.setCwd(StorageUtil.getStorageDirectory());
+		Sys.setCwd(Path.addTrailingSlash(android.content.Context.getExternalFilesDir()));
+		#elseif ios
+		Sys.setCwd(System.documentsDirectory);
 		#end
 		
 		super();

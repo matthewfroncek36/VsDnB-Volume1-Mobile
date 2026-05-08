@@ -2,7 +2,6 @@ package;
 
 #if !macro
 import Paths;
-import mobile.StorageUtil;
 import audio.SoundController;
 import ui.Cursor;
 
