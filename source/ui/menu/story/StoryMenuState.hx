@@ -23,7 +23,9 @@ import ui.MusicBeatState;
 import ui.menu.freeplay.FreeplayState;
 import ui.menu.story.MenuItem;
 import flixel.util.FlxTimer;
+#if desktop
 import api.Discord.DiscordClient;
+#end
 
 using StringTools;
 
@@ -114,7 +116,9 @@ class StoryMenuState extends MusicBeatState
 			weeks.push(jokeWeek);
 		}
 
+		#if desktop
 		DiscordClient.changePresence("In the Story Menu", null);
+		#end
 
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;

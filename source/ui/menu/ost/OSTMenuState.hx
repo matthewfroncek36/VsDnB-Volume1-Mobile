@@ -231,7 +231,9 @@ class OSTMenuState extends MusicBeatState
         
         Cursor.show();
         
+        #if desktop
         DiscordClient.changePresence('In the OST Menu', null);
+        #end
     }
 
     override function update(elapsed:Float)

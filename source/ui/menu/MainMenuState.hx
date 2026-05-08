@@ -118,7 +118,9 @@ class MainMenuState extends MusicBeatState
 		}
 		persistentUpdate = persistentDraw = true;
 
+		#if desktop
 		DiscordClient.changePresence("In the Menus", null);
+		#end
 
 		bg = new FlxSprite(-80).loadGraphic(FileUtil.randomizeBG());
 		bg.scrollFactor.set();
