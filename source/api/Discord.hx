@@ -263,6 +263,7 @@ class DiscordClient
 	}
 }
 
+#if desktop
 @:allow(util.Discord.DiscordClient)
 private final class DiscordPresence
 {
@@ -351,3 +352,4 @@ private final class DiscordPresence
 		return cast(__presence.endTimestamp = value, Int);
 	}
 }
+#end
