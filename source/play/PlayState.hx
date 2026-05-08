@@ -63,7 +63,10 @@ import util.FileUtil;
 import util.MathUtil;
 import util.TweenUtil;
 import util.tools.Preloader;
+#if desktop
 import api.Discord.DiscordClient;
+#end
+import api.Discord.RPCType;
 
 /**
  * The parameters used to initalize PlayState.
@@ -2464,8 +2467,9 @@ class PlayState extends MusicBeatState
 	 * Changes the Discord Rich Presence based on a specific type.
 	 * @param type The type to change it based off.
 	 */
-	function changePresence(type:api.Discord.RPCType):Void
+	function changePresence(type:RPCType):Void
 	{
+		#if desktop
 		if (currentChart == null)
 			return;
 
@@ -2493,6 +2497,7 @@ class PlayState extends MusicBeatState
 			case CUSTOM(details, state, smallImageKey, hasStartTimestamp, endTimestamp, largeImageKey):
 				DiscordClient.changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp, largeImageKey);
 		}
+		#end
 	}
 
 	/**
