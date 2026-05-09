@@ -29,6 +29,8 @@ class PolygonizedEvents extends SongModule
         screenShader.setFloat('uSpeed', 1);
         screenShader.setFloat('uTime', 0);
         screenShader.setBool('uEnabled', false);
+        
+        game.qqqeb = true;
     }
 
     override function onCreateUI(e:ScriptEvent)

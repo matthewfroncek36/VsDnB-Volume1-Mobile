@@ -160,6 +160,9 @@ abstract class PlayerSelect extends MusicBeatState
         buildMusic();
 
         updateSelection();
+        
+        addTouchPad("LEFT_RIGHT", "A_B");
+		addTouchPadCamera();
     }
 
     override function update(elapsed:Float)

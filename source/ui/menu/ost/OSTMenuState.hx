@@ -237,6 +237,7 @@ class OSTMenuState extends MusicBeatState
         
         addTouchPad("LEFT_FULL", "A_B");
 		addTouchPadCamera();
+		touchPad.buttonA.y = touchPad.buttonB.y -= 594;
     }
 
     override function update(elapsed:Float)
@@ -346,7 +347,7 @@ class OSTMenuState extends MusicBeatState
 						}
                     }
 
-                    if (FlxG.keys.justPressed.ENTER && selectedSongOption.getVariation(selectedVariation) != turnTable.currentPlayData)
+                    if (controls.ACCEPT && selectedSongOption.getVariation(selectedVariation) != turnTable.currentPlayData)
                     {
                         loadSong(selectedSongOption.getVariation(selectedVariation));
                     }

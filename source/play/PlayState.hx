@@ -984,6 +984,10 @@ class PlayState extends MusicBeatState
 			paused = false;
 
 			changePresence(NORMAL(true, false));
+			
+			removeMobileControls();
+			addMobileControls();
+			mobileControls.instance.visible = true;
 		}
 
 		super.closeSubState();

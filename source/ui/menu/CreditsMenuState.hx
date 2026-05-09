@@ -114,7 +114,7 @@ class CreditsMenuState extends MusicBeatState
         {
             followCamera.followPoint.y = FlxMath.bound(followCamera.followPoint.y - MOVE_SPEED * elapsed, MIN_Y, MAX_Y);
         }
-        if (FlxG.keys.pressed.DOWN || touchPad != null && touchPad.buttonDown.justPressed)
+        if (FlxG.keys.pressed.DOWN || touchPad != null && touchPad.buttonDown.pressed)
         {
             followCamera.followPoint.y = FlxMath.bound(followCamera.followPoint.y + MOVE_SPEED * elapsed, MIN_Y, MAX_Y);
         }

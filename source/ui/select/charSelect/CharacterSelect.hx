@@ -299,6 +299,9 @@ class CharacterSelect extends MusicBeatState
 		updatePageDisplay();
 		updateSelection();
 
+		addTouchPad("LEFT_FULL", "A_B");
+		addTouchPadCamera();
+		
 		super.create();
 	}
 
@@ -308,37 +311,17 @@ class CharacterSelect extends MusicBeatState
 
 		if (canInteract)
 		{
-			var firstPressed = FlxG.keys.firstJustPressed();
-
-			if (firstPressed != -1)
-			{
-				for (control => key in selectControls)
-				{
-					if (firstPressed == key)
-					{
-						switch (control)
-						{
-							case LEFT:
-								changeRowSelection(-1);
-							case DOWN:
-								changeColumnSelection(1);
-							case UP:
-								changeColumnSelection(-1);
-							case RIGHT:
-								changeRowSelection(1);
-							default:
-						}
-					}
-				}
-
-				if (singControls.contains(firstPressed))
-				{
-					var controlIndex = singControls.indexOf(firstPressed);
-
-					char.sing(controlIndex);
-					strumLine.strums.members[controlIndex].playAnim('confirm', true);
-				}
-			}
+			if (controls.LEFT_P)
+			    changeRowSelection(-1);
+			
+			if (controls.RIGHT_P)
+			    changeRowSelection(1);
+			    
+			if (controls.UP_P)
+			    changeColumnSelection(-1);
+			
+			if (controls.DOWN_P)
+			    changeColumnSelection(1);
 
 			if (controls.ACCEPT)
 				selectCharacter();

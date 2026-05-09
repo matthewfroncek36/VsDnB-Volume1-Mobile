@@ -16,6 +16,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
 import ui.menu.settings.SettingsMenu;
+import ui.MusicBeatSubstate;
 
 enum SelectingState
 {
@@ -201,16 +202,16 @@ class ConfigureKeybinds extends FlxGroup
 	{
 		super.update(elapsed);
 
-		var left = PlayerSettings.controls.LEFT;
-		var leftP = PlayerSettings.controls.LEFT_P;
+		var left = (PlayerSettings.controls.LEFT || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonLeft.pressed);
+		var leftP = (PlayerSettings.controls.LEFT_P || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonLeft.justPressed);
 
-		var right = PlayerSettings.controls.RIGHT;
-		var rightP = PlayerSettings.controls.RIGHT_P;
+		var right = (PlayerSettings.controls.RIGHT || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonRight.pressed);
+		var rightP = (PlayerSettings.controls.RIGHT_P || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonRight.justPressed);
 
-		var downP = PlayerSettings.controls.DOWN_P;
-		var upP = PlayerSettings.controls.UP_P;
-		var accept = PlayerSettings.controls.ACCEPT;
-		var back = PlayerSettings.controls.BACK;
+		var downP = (PlayerSettings.controls.DOWN_P || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonDown.justPressed);
+		var upP = (PlayerSettings.controls.UP_P || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonUp.justPressed);
+		var accept = (PlayerSettings.controls.ACCEPT || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonA.justPressed);
+		var back = (PlayerSettings.controls.BACK || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonB.justPressed);
 
 		if (!canInteract)
 			return;
