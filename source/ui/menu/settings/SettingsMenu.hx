@@ -5,6 +5,7 @@ import controls.PlayerSettings;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
+import ui.MusicBeatSubstate;
 import flixel.addons.ui.FlxSlider;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
@@ -35,7 +36,7 @@ enum SelectState
 	SelectingOption;
 }
 
-class SettingsMenu extends FlxSubState
+class SettingsMenu extends MusicBeatSubstate
 {
 	static var curCategorySelection:Int = 0;
 	
@@ -175,6 +176,14 @@ class SettingsMenu extends FlxSubState
 		updateHeaderText();
 	}
 
+	override function closeSubState() {
+		super.closeSubState();
+		persistentUpdate = true;
+		removeTouchPad();
+		addTouchPad("LEFT_FULL", "A_B_C");
+		addTouchPadCamera();
+	}
+	
 	public override function update(elapsed:Float)
 	{
 		super.update(elapsed);

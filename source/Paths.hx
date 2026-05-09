@@ -9,6 +9,7 @@ import haxe.io.Path;
 import openfl.media.Sound;
 import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
+import lime.utils.Assets;
 import util.tools.Preloader;
 import play.save.Preferences;
 
@@ -108,7 +109,7 @@ class Paths
 	 * Retrieves path for a file from the preload library.
 	 * @param file The file path to retrieve the path for.
 	 */
-	static inline function getPreloadPath(file:String)
+	public static inline function getPreloadPath(file:String)
 	{
 		return 'assets/$file';
 	}
