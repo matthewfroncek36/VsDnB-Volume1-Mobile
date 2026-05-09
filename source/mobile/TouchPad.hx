@@ -31,6 +31,7 @@ import flixel.util.FlxSignal.FlxTypedSignal;
 import mobile.MobileData;
 import mobile.input.MobileInputID;
 import mobile.input.MobileInputManager;
+import util.CoolUtil;
 
 using StringTools;
 
