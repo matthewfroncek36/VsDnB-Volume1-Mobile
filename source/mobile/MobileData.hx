@@ -120,17 +120,6 @@ class MobileData
 		}
 	}
 
-	static function directoriesWithFile(path:String, fileToFind:String, mods:Bool = true)
-	{
-		var foldersToCheck:Array<String> = [];
-		#if sys
-		if(FileSystem.exists(path + fileToFind))
-		#end
-			foldersToCheck.push(path + fileToFind);
-			
-		return foldersToCheck;
-	}
-
 	static function set_mode(mode:Int = 3)
 	{
 		save.data.mobileControlsMode = mode;

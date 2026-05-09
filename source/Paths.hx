@@ -70,6 +70,9 @@ class Paths
 	 */
 	static function getPath(file:String, type:AssetType, library:Null<String>)
 	{
+		if (library == "mobile")
+			return getPreloadPath('mobile/$file');
+		
 		if (library != null)
 		{
 			return getLibraryPath(file, library);
