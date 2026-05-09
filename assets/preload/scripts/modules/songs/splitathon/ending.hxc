@@ -1,5 +1,7 @@
 import flixel.util.FlxColor;
 
+import audio.SoundController;
+
 class SplitathonEnding extends SongModule
 {
     var black:FlxSprite;
@@ -54,7 +56,7 @@ class SplitathonEnding extends SongModule
                     FlxG.save.data.splitathonBeat = true;
                     FlxG.save.flush();
                     
-                    FlxG.sound.playMusic(Paths.music('freakyMenu'));
+                    SoundController.playMusic(Paths.music('freakyMenu'));
                     FlxG.switchState(new StoryMenuState());
                 }
             });

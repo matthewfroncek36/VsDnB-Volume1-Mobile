@@ -35,9 +35,11 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.input.touch.FlxTouch;
 import flixel.ui.FlxButton as UIButton;
+import flixel.addons.transition.FlxTransitionableState;
 import mobile.TouchButton;
 import mobile.TouchUtil;
 import mobile.objects.Alphabet;
+import ui.MusicBeatSubstate;
 
 using StringTools;
 
@@ -61,15 +63,12 @@ class MobileControlSelectSubState extends MusicBeatSubstate
 	public function new()
 	{
 		super();
-		if (ClientPrefs.extraButtons != 'NONE')
-			options.push('Pad-Extra');
 
 		bg = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true,
 			FlxColor.fromRGB(FlxG.random.int(0, 255), FlxG.random.int(0, 255), FlxG.random.int(0, 255)),
 			FlxColor.fromRGB(FlxG.random.int(0, 255), FlxG.random.int(0, 255), FlxG.random.int(0, 255))));
 		bg.velocity.set(40, 40);
 		bg.alpha = 0;
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		FlxTween.tween(bg, {alpha: 0.45}, 0.3, {
 			ease: FlxEase.quadOut,
 			onComplete: (twn:FlxTween) ->
@@ -147,7 +146,10 @@ class MobileControlSelectSubState extends MusicBeatSubstate
 			FlxG.mouse.visible = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			MobileData.forcedMode = null;
-			close();
+			//close();
+			FlxTransitionableState.skipNextTransIn = true;
+			FlxTransitionableState.skipNextTransOut = true;
+			FlxG.resetState();
 		});
 		exit.color = FlxColor.LIME;
 		exit.setGraphicSize(Std.int(exit.width) * 3);

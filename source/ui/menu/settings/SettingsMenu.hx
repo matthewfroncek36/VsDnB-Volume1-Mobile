@@ -127,6 +127,9 @@ class SettingsMenu extends FlxSubState
 		camera.bgColor.alpha = 0;
 
 		FlxG.cameras.add(camera, false);
+		
+		addTouchPad("LEFT_FULL", "A_B_C");
+		addTouchPadCamera();
 	}
 
 	public function init()
@@ -188,6 +191,12 @@ class SettingsMenu extends FlxSubState
 		var upP = PlayerSettings.controls.UP_P;
 		var back = PlayerSettings.controls.BACK;
 
+		if (touchPad != null && touchPad.buttonC.justPressed) {
+			touchPad.active = touchPad.visible = persistentUpdate = false;
+			openSubState(new mobile.MobileControlSelectSubState());
+			canInteract = false;
+		}
+		
 		switch (curState)
 		{
 			case SelectingCategory:

@@ -56,13 +56,6 @@ class MobileData
 
 		readDirectory(Paths.getPreloadPath('mobile/DPadModes'), dpadModes);
 		readDirectory(Paths.getPreloadPath('mobile/ActionModes'), actionModes);
-		#if MODS_ALLOWED
-		for (folder in directoriesWithFile(Paths.getPreloadPath(), 'mobile/'))
-		{
-			readDirectory(Path.join([folder, 'DPadModes']), dpadModes);
-			readDirectory(Path.join([folder, 'ActionModes']), actionModes);
-		}
-		#end
 
 		for (data in ExtraActions.createAll())
 			extraActions.set(data.getName(), data);
@@ -113,14 +106,13 @@ class MobileData
 	{
 		folder = folder.contains(':') ? folder.split(':')[1] : folder;
 
-		#if MODS_ALLOWED if (FileSystem.exists(folder)) #end
 		for (file in Paths.readDirectory(folder))
 		{
 			var fileWithNoLib:String = file.contains(':') ? file.split(':')[1] : file;
 			if (Path.extension(fileWithNoLib) == 'json')
 			{
 				file = Path.join([folder, Path.withoutDirectory(file)]);
-				var str = #if MODS_ALLOWED File.getContent(file) #else Assets.getText(file) #end;
+				var str = Assets.getText(file);
 				var json:TouchButtonsData = cast Json.parse(str);
 				var mapKey:String = Path.withoutDirectory(Path.withoutExtension(fileWithNoLib));
 				map.set(mapKey, json);
@@ -135,29 +127,7 @@ class MobileData
 		if(FileSystem.exists(path + fileToFind))
 		#end
 			foldersToCheck.push(path + fileToFind);
-
-		#if MODS_ALLOWED
-		if(mods)
-		{
-			// Global mods first
-			for(mod in Paths.getGlobalMods())
-			{
-				var folder:String = Paths.mods(mod + '/' + fileToFind);
-				if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(folder);
-			}
-
-			// Then "PsychEngine/mods/" main folder
-			var folder:String = Paths.mods(fileToFind);
-			if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(Paths.mods(fileToFind));
-
-			// And lastly, the loaded mod's folder
-			if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-			{
-				var folder:String = Paths.mods(Paths.currentModDirectory + '/' + fileToFind);
-				if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(folder);
-			}
-		}
-		#end
+			
 		return foldersToCheck;
 	}
 

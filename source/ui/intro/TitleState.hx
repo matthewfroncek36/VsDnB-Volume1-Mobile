@@ -33,6 +33,8 @@ import ui.menu.MainMenuState;
 import api.Discord.DiscordClient;
 #end
 
+import mobile.TouchUtil;
+
 using StringTools;
 
 class TitleState extends MusicBeatState
@@ -129,7 +131,7 @@ class TitleState extends MusicBeatState
 			FlxG.fullscreen = !FlxG.fullscreen;
 		}
 		
-		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
+		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || TouchUtil.justPressed;
 
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 

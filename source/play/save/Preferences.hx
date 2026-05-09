@@ -52,7 +52,7 @@ class Preferences
 		'borderless' => false,
 		'darkMode' => false,
 		
-		'storageType' => 'EXTERNAL',
+		'hitboxType' => 'Gradient',
 	];
 
 	/**
@@ -584,18 +584,18 @@ class Preferences
 		return save?.data?.darkMode;
 	}
 	
-	public static var storageType(get, set):String;
+	public static var hitboxType(get, set):String;
 
-	static function set_storageType(value:String):String
+	static function set_hitboxType(value:String):String
 	{
-		save.data.storageType = value;
+		save.data.hitboxType = value;
 		save.flush();
-		onPreferenceChanged.dispatch('storageType', value);
+		onPreferenceChanged.dispatch('hitboxType', value);
 		return value;
 	}
 
-	static function get_storageType():String
+	static function get_hitboxType():String
 	{
-		return save?.data?.storageType;
+		return save?.data?.hitboxType;
 	}
 }

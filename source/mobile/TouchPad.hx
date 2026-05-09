@@ -132,7 +132,7 @@ class TouchPad extends MobileInputManager implements IMobileControls
 			case NONE: // nothing
 		}
 
-		alpha = ClientPrefs.controlsAlpha;
+		alpha = 0.6;
 		scrollFactor.set();
 		updateTrackedButtons();
 
@@ -213,7 +213,7 @@ class TouchPad extends MobileInputManager implements IMobileControls
 
 		button.immovable = true;
 		button.solid = button.moves = false;
-		button.label.antialiasing = button.antialiasing = ClientPrefs.globalAntialiasing;
+		button.label.antialiasing = button.antialiasing = true;
 		button.tag = Graphic.toUpperCase();
 		button.color = Color;
 		button.parentAlpha = button.alpha;

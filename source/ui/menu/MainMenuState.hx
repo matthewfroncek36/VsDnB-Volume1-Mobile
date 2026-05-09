@@ -212,11 +212,21 @@ class MainMenuState extends MusicBeatState
 			});
 		});
 
+		addTouchPad("LEFT_FULL", "A_B");
+		addTouchPadCamera();
+		
 		super.create();
 	}
 
+	override function closeSubState() {
+		super.closeSubState();
+		removeTouchPad();
+		addTouchPad("LEFT_FULL", "A_B");
+		addTouchPadCamera();
+	}
+	
 	var selectedSomethin:Bool = false;
-
+	
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -382,6 +392,7 @@ class MainMenuState extends MusicBeatState
 						transitionItems();
 					}
 					openSubState(settings);
+					removeTouchPad();
 				case 'credits':
 					FlxG.switchState(() -> new CreditsMenuState());
 			}

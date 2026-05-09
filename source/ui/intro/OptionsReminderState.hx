@@ -16,12 +16,14 @@ class OptionsReminderState extends MusicBeatState
         text.screenCenter();
         add(text);
 
+        addTouchPad("NONE", "A");
+        
         super.create();
     }
 
     override function update(elapsed:Float)
     {
-        if (FlxG.keys.justPressed.ENTER)
+        if (FlxG.keys.justPressed.ENTER || touchPad != null && touchPad.buttonA.justPressed)
         {
             FlxG.save.data.hasSeenOptionsReminder = true;
             FlxG.save.flush();

@@ -9,12 +9,25 @@ import scripting.ScriptEventDispatchSubState;
 import scripting.events.ScriptEvent;
 import scripting.module.ModuleHandler;
 import util.SortUtil;
+import mobile.MobileData;
+import mobile.IMobileControls;
+import mobile.Hitbox;
+import mobile.TouchPad;
+import flixel.FlxCamera;
+import flixel.util.FlxDestroyUtil;
 
 /**
  * An `FlxSubState` linked to the Conductor to allow for bpm synced events such as step, beat, and measure hit events, and more.
  */
 class MusicBeatSubstate extends ScriptEventDispatchSubState
 {
+	public static var instance:MusicBeatSubstate;
+	public function new()
+	{
+		instance = this;
+		super();
+	}
+	
 	/**
 	 * The current step of the Conductor.
 	 */
@@ -46,6 +59,84 @@ class MusicBeatSubstate extends ScriptEventDispatchSubState
 
 	inline function get_controls():Controls
 		return PlayerSettings.controls;
+		
+	public var touchPad:TouchPad;
+	public var touchPadCam:FlxCamera;
+	public var mobileControls:IMobileControls;
+	public var mobileControlsCam:FlxCamera;
+
+	public function addTouchPad(DPad:String, Action:String)
+	{
+		touchPad = new TouchPad(DPad, Action);
+		add(touchPad);
+	}
+
+	public function removeTouchPad()
+	{
+		if (touchPad != null)
+		{
+			remove(touchPad);
+			touchPad = FlxDestroyUtil.destroy(touchPad);
+		}
+
+		if(touchPadCam != null)
+		{
+			FlxG.cameras.remove(touchPadCam);
+			touchPadCam = FlxDestroyUtil.destroy(touchPadCam);
+		}
+	}
+
+	public function addMobileControls(defaultDrawTarget:Bool = false):Void
+	{
+		var extraMode = MobileData.extraActions.get(ClientPrefs.extraButtons);
+
+		switch (MobileData.mode)
+		{
+			case 0: // RIGHT_FULL
+				mobileControls = new TouchPad('RIGHT_FULL', 'NONE', extraMode);
+			case 1: // LEFT_FULL
+				mobileControls = new TouchPad('LEFT_FULL', 'NONE', extraMode);
+			case 2: // CUSTOM
+				mobileControls = MobileData.getTouchPadCustom(new TouchPad('RIGHT_FULL', 'NONE', extraMode));
+			case 3: // HITBOX
+				mobileControls = new Hitbox(extraMode);
+		}
+
+		mobileControlsCam = new FlxCamera();
+		mobileControlsCam.bgColor.alpha = 0;
+		FlxG.cameras.add(mobileControlsCam, defaultDrawTarget);
+
+		mobileControls.instance.cameras = [mobileControlsCam];
+		mobileControls.instance.visible = false;
+		add(mobileControls.instance);
+	}
+
+	public function removeMobileControls()
+	{
+		if (mobileControls != null)
+		{
+			remove(mobileControls.instance);
+			mobileControls.instance = FlxDestroyUtil.destroy(mobileControls.instance);
+			mobileControls = null;
+		}
+
+		if (mobileControlsCam != null)
+		{
+			FlxG.cameras.remove(mobileControlsCam);
+			mobileControlsCam = FlxDestroyUtil.destroy(mobileControlsCam);
+		}
+	}
+
+	public function addTouchPadCamera(defaultDrawTarget:Bool = false):Void
+	{
+		if (touchPad != null)
+		{
+			touchPadCam = new FlxCamera();
+			touchPadCam.bgColor.alpha = 0;
+			FlxG.cameras.add(touchPadCam, defaultDrawTarget);
+			touchPad.cameras = [touchPadCam];
+		}
+	}
 
 
 	override function create()
@@ -74,6 +165,9 @@ class MusicBeatSubstate extends ScriptEventDispatchSubState
 	override function destroy()
 	{
 		removeSignals();
+		
+		removeTouchPad();
+		removeMobileControls();
 
 		super.destroy();
 	}

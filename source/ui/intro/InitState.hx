@@ -81,6 +81,7 @@ class InitState extends FlxState
 		
 		Preloader.initalize();
 		CrashHandler.initalize();
+		mobile.MobileData.init();
 		
 		#if debug
 		if (FlxG.save.data.hasSeenOptionsReminder == null || !FlxG.save.data.hasSeenOptionsReminder)
