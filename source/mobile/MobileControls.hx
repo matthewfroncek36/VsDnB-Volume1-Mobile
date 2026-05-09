@@ -54,7 +54,7 @@ class MobileControls extends FlxTypedSpriteGroup<MobileInputManager>
 			case 3: // HITBOX
 				initControler(3, extra);
 		}
-		alpha = Preferences.controlsAlpha;
+		alpha = 0.6;
 	}
 
 	private function initControler(controlMode:Int = 0, ?extra:Bool = true):Void
