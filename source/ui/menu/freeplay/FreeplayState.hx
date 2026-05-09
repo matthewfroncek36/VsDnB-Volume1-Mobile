@@ -321,6 +321,9 @@ class FreeplayState extends MusicBeatState
 		add(grpSongs);
 		add(grpIcons);
 
+		addTouchPad("LEFT_FULL", "A_B");
+		addTouchPadCamera();
+		
 		super.create();
 	}
 	

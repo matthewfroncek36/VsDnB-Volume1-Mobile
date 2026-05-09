@@ -241,6 +241,10 @@ class StoryMenuState extends MusicBeatState
 		{
 			changeWeek(0);
 		}
+		
+		addTouchPad("LEFT_RIGHT", "A_B");
+		addTouchPadCamera();
+		
 		super.create();
 	}
 

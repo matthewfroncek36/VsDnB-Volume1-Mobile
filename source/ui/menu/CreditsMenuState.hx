@@ -100,6 +100,9 @@ class CreditsMenuState extends MusicBeatState
 		FlxG.cameras.reset(followCamera);
 		FlxG.cameras.setDefaultDrawTarget(followCamera, true);
         
+        addTouchPad("UP_DOWN", "B");
+		addTouchPadCamera();
+        
         super.create();
     }
 
@@ -107,11 +110,11 @@ class CreditsMenuState extends MusicBeatState
     {
         super.update(elapsed);
 
-        if (FlxG.keys.pressed.UP)
+        if (FlxG.keys.pressed.UP || touchPad != null && touchPad.buttonUp.pressed)
         {
             followCamera.followPoint.y = FlxMath.bound(followCamera.followPoint.y - MOVE_SPEED * elapsed, MIN_Y, MAX_Y);
         }
-        if (FlxG.keys.pressed.DOWN)
+        if (FlxG.keys.pressed.DOWN || touchPad != null && touchPad.buttonDown.justPressed)
         {
             followCamera.followPoint.y = FlxMath.bound(followCamera.followPoint.y + MOVE_SPEED * elapsed, MIN_Y, MAX_Y);
         }

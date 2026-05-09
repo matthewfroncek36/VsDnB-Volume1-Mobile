@@ -234,6 +234,9 @@ class OSTMenuState extends MusicBeatState
         #if desktop
         DiscordClient.changePresence('In the OST Menu', null);
         #end
+        
+        addTouchPad("LEFT_FULL", "A_B");
+		addTouchPadCamera();
     }
 
     override function update(elapsed:Float)
@@ -254,22 +257,22 @@ class OSTMenuState extends MusicBeatState
             switch (currentSelectType)
             {
                 case CATEGORY:
-                    if (FlxG.keys.justPressed.UP || FlxG.mouse.wheel > 0)
+                    if (controls.UP_P || FlxG.mouse.wheel > 0)
                     {
                         toggleCategorySelect(false);
                         changeSongSelection(categorySongsCount - currentSongSelected);
                     }
-                    if (FlxG.keys.justPressed.DOWN || FlxG.mouse.wheel < 0)
+                    if (controls.DOWN_P || FlxG.mouse.wheel < 0)
                     {
                         toggleCategorySelect(false);
                         changeSongSelection(0 - currentSongSelected);
                     }
 
-                    if (FlxG.keys.pressed.LEFT || FlxG.mouse.wheel < 0)
+                    if (controls.LEFT || FlxG.mouse.wheel < 0)
                     {
                         arrowLeft.scale.set(0.8, 0.8);
 
-                        if (FlxG.keys.justPressed.LEFT)
+                        if (controls.LEFT_P)
                             changeCategorySelection(-1);
                     }
                     else
@@ -277,11 +280,11 @@ class OSTMenuState extends MusicBeatState
                         arrowLeft.scale.set(1, 1);
                     }
                     
-                    if (FlxG.keys.pressed.RIGHT)
+                    if (controls.RIGHT)
                     {
                         arrowRight.scale.set(0.8, 0.8);
 
-                        if (FlxG.keys.justPressed.RIGHT)
+                        if (controls.RIGHT_P)
                             changeCategorySelection(1);
                     }
                     else
@@ -289,7 +292,7 @@ class OSTMenuState extends MusicBeatState
                         arrowRight.scale.set(1, 1);
                     }
                 case SONG:
-                    if (FlxG.keys.justPressed.UP || FlxG.mouse.wheel > 0)
+                    if (controls.UP_P || FlxG.mouse.wheel > 0)
                     {
                         if (currentSongSelected == 0)
                         {
@@ -300,7 +303,7 @@ class OSTMenuState extends MusicBeatState
                             changeSongSelection(-1);
                         }
                     }
-                    if (FlxG.keys.justPressed.DOWN || FlxG.mouse.wheel < 0)
+                    if (controls.DOWN_P || FlxG.mouse.wheel < 0)
                     {
                         if (currentSongSelected == categorySongsCount)
                         {
@@ -314,12 +317,12 @@ class OSTMenuState extends MusicBeatState
 
                     if (hasMultipleVariations)
                     {
-						if (FlxG.keys.pressed.LEFT)
+						if (controls.LEFT)
 						{
                             arrowLeftVariation.color = FlxColor.LIME;
 							arrowLeftVariation.scale.set(0.8, 0.8);
 
-							if (FlxG.keys.justPressed.LEFT)
+							if (controls.LEFT_P)
 								changeVariationSelection(-1);
 						}
 						else
@@ -328,12 +331,12 @@ class OSTMenuState extends MusicBeatState
 							arrowLeftVariation.scale.set(1, 1);
 						}
 
-						if (FlxG.keys.pressed.RIGHT)
+						if (controls.RIGHT)
 						{
                             arrowRightVariation.color = FlxColor.LIME;
 							arrowRightVariation.scale.set(0.8, 0.8);
 
-							if (FlxG.keys.justPressed.RIGHT)
+							if (controls.RIGHT_P)
 								changeVariationSelection(1);
 						}
 						else

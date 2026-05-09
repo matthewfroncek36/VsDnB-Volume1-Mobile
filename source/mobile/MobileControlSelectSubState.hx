@@ -62,6 +62,8 @@ class MobileControlSelectSubState extends MusicBeatSubstate
 
 	public function new()
 	{
+		PlayState.qqqeb = true;
+		
 		super();
 
 		bg = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true,
@@ -147,6 +149,7 @@ class MobileControlSelectSubState extends MusicBeatSubstate
 			SoundController.play(Paths.sound('cancelMenu'));
 			MobileData.forcedMode = null;
 			close();
+			PlayState.qqqeb = false;
 		});
 		exit.color = FlxColor.LIME;
 		exit.setGraphicSize(Std.int(exit.width) * 3);

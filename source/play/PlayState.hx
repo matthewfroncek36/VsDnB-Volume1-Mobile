@@ -93,6 +93,8 @@ typedef PlayStateParams =
 @:allow(play.notes)
 class PlayState extends MusicBeatState
 {
+	public static var qqqeb:Bool = false;
+	
 	/**
 	 * STATIC VARIABLES
 	 */
@@ -659,6 +661,14 @@ class PlayState extends MusicBeatState
 		initalizeCamera();
 		initalizeUI();
 		generateSong();
+		
+		#if !android
+		addTouchPad("NONE", "P");
+		addTouchPadCamera();
+		touchPad.visible = true;
+		#end
+		addMobileControls();
+		
 		prepareSong();
 
 		super.create();
@@ -670,7 +680,7 @@ class PlayState extends MusicBeatState
 
 		elapsedTime += elapsed;
 
-		if ((isInCutscene && FlxG.keys.justPressed.ESCAPE) || (FlxG.keys.justPressed.ENTER && Countdown.countdownStarted && canPause))
+		if ((isInCutscene && (FlxG.keys.justPressed.ESCAPE || #if android FlxG.android.justReleased.BACK #else touchPad.buttonP.justPressed #end)) || ((FlxG.keys.justPressed.ENTER || #if android FlxG.android.justReleased.BACK #else touchPad.buttonP.justPressed #end) && Countdown.countdownStarted && canPause))
 			runPause();
 
 		if (FlxG.keys.justPressed.SEVEN)
@@ -812,6 +822,8 @@ class PlayState extends MusicBeatState
 	override function destroy():Void
 	{
 		performCleanup();
+		
+		qqqeb = false;
 		
 		super.destroy();
 	}
@@ -1539,6 +1551,8 @@ class PlayState extends MusicBeatState
 	 */
 	function startCountdown():Void
 	{
+		mobileControls.instance.visible = true;
+		
 		dadStrums.fadeNotes();
 		playerStrums.fadeNotes();
 
@@ -1980,6 +1994,7 @@ class PlayState extends MusicBeatState
 	{
 		canPause = false;
 		camZooming = false;
+		mobileControls.instance.visible = #if !android touchPad.visible = #end false;
 		if (MathGameState.failedGame)
 		{
 			MathGameState.failedGame = false;

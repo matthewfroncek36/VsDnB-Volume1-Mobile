@@ -139,6 +139,9 @@ class EndingState extends MusicBeatState
 		add(endingDescription);
 
 		FlxG.camera.fade(FlxColor.BLACK, 0.8, true);
+		
+		addTouchPad("NONE", "A");
+		addTouchPadCamera();
 	}
 
 	override public function update(elapsed:Float):Void

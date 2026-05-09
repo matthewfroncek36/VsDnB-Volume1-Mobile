@@ -149,6 +149,9 @@ class PauseSubState extends MusicBeatSubstate
 		generatePauseOptions();
 		changeSelection();
 		setupPauseCamera();
+		
+		addTouchPad("UP_DOWN", "A");
+		addTouchPadCamera();
 	}
 
 	override function update(elapsed:Float)
@@ -162,9 +165,9 @@ class PauseSubState extends MusicBeatSubstate
 
 		super.update(elapsed);
 
-		var upP = controls.UP_P;
-		var downP = controls.DOWN_P;
-		var accepted = controls.ACCEPT;
+		var upP = controls.UP_P || touchPad != null && touchPad.buttonUp.justPressed;
+		var downP = controls.DOWN_P || touchPad != null && touchPad.buttonDown.justPressed;
+		var accepted = controls.ACCEPT || touchPad != null && touchPad.buttonA.justPressed;
 
 		if (upP)
 		{

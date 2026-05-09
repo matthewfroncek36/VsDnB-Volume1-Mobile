@@ -212,7 +212,7 @@ class MainMenuState extends MusicBeatState
 			});
 		});
 
-		addTouchPad("LEFT_FULL", "A_B");
+		addTouchPad("LEFT_RIGHT", "A_B");
 		addTouchPadCamera();
 		
 		super.create();
@@ -221,7 +221,7 @@ class MainMenuState extends MusicBeatState
 	override function closeSubState() {
 		super.closeSubState();
 		removeTouchPad();
-		addTouchPad("LEFT_FULL", "A_B");
+		addTouchPad("LEFT_RIGHT", "A_B");
 		addTouchPadCamera();
 	}
 	

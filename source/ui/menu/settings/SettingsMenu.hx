@@ -178,7 +178,7 @@ class SettingsMenu extends MusicBeatSubstate
 
 	override function closeSubState() {
 		super.closeSubState();
-		persistentUpdate = true;
+		persistentUpdate = canInteract = true;
 		removeTouchPad();
 		addTouchPad("LEFT_FULL", "A_B_C");
 		addTouchPadCamera();
@@ -191,19 +191,18 @@ class SettingsMenu extends MusicBeatSubstate
 		if (!canInteract)
 			return;
 
-		var left = PlayerSettings.controls.LEFT;
-		var right = PlayerSettings.controls.RIGHT;
+		var left = (PlayerSettings.controls.LEFT || touchPad != null && touchPad.buttonLeft.pressed);
+		var right = (PlayerSettings.controls.RIGHT || touchPad != null && touchPad.buttonRight.pressed);
 
-		var leftP = PlayerSettings.controls.LEFT_P;
-		var rightP = PlayerSettings.controls.RIGHT_P;
-		var downP = PlayerSettings.controls.DOWN_P;
-		var upP = PlayerSettings.controls.UP_P;
-		var back = PlayerSettings.controls.BACK;
+		var leftP = (PlayerSettings.controls.LEFT_P || touchPad != null && touchPad.buttonLeft.justPressed);
+		var rightP = (PlayerSettings.controls.RIGHT_P || touchPad != null && touchPad.buttonRight.justPressed);
+		var downP = (PlayerSettings.controls.DOWN_P || touchPad != null && touchPad.buttonDown.justPressed);
+		var upP = (PlayerSettings.controls.UP_P || touchPad != null && touchPad.buttonUp.justPressed);
+		var back = (PlayerSettings.controls.BACK || touchPad != null && touchPad.buttonB.justPressed);
 
 		if (touchPad != null && touchPad.buttonC.justPressed) {
-			touchPad.active = touchPad.visible = persistentUpdate = false;
+			touchPad.active = touchPad.visible = persistentUpdate = canInteract = false;
 			openSubState(new mobile.MobileControlSelectSubState());
-			canInteract = false;
 		}
 		
 		switch (curState)
