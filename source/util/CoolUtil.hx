@@ -6,7 +6,7 @@ import lime.utils.Assets as LimeAssets;
 import lime.utils.AssetLibrary;
 import lime.utils.AssetManifest;
 import flixel.util.FlxColor;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
