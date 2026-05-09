@@ -15,6 +15,7 @@ import mobile.Hitbox;
 import mobile.TouchPad;
 import flixel.FlxCamera;
 import flixel.util.FlxDestroyUtil;
+import play.save.Preferences;
 
 /**
  * An `FlxSubState` linked to the Conductor to allow for bpm synced events such as step, beat, and measure hit events, and more.
@@ -88,7 +89,7 @@ class MusicBeatSubstate extends ScriptEventDispatchSubState
 
 	public function addMobileControls(defaultDrawTarget:Bool = false):Void
 	{
-		var extraMode = MobileData.extraActions.get(ClientPrefs.extraButtons);
+		var extraMode = MobileData.extraActions.get(Preferences.extraButtons);
 
 		switch (MobileData.mode)
 		{

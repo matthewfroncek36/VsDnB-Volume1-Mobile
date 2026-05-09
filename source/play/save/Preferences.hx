@@ -53,6 +53,7 @@ class Preferences
 		'darkMode' => false,
 		
 		'hitboxType' => 'Gradient',
+		'extraButtons' => 'NONE',
 	];
 
 	/**
@@ -597,5 +598,20 @@ class Preferences
 	static function get_hitboxType():String
 	{
 		return save?.data?.hitboxType;
+	}
+	
+	public static var extraButtons(get, set):String;
+
+	static function set_extraButtons(value:String):String
+	{
+		save.data.extraButtons = value;
+		save.flush();
+		onPreferenceChanged.dispatch('extraButtons', value);
+		return value;
+	}
+
+	static function get_extraButtons():String
+	{
+		return save?.data?.extraButtons;
 	}
 }
