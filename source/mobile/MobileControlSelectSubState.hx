@@ -62,7 +62,7 @@ class MobileControlSelectSubState extends MusicBeatSubstate
 
 	public function new()
 	{
-		PlayState.qqqeb = true;
+		play.PlayState.qqqeb = true;
 		
 		super();
 
@@ -149,7 +149,7 @@ class MobileControlSelectSubState extends MusicBeatSubstate
 			SoundController.play(Paths.sound('cancelMenu'));
 			MobileData.forcedMode = null;
 			close();
-			PlayState.qqqeb = false;
+			play.PlayState.qqqeb = false;
 		});
 		exit.color = FlxColor.LIME;
 		exit.setGraphicSize(Std.int(exit.width) * 3);

@@ -21,6 +21,7 @@ import scripting.IScriptedClass.IDialogueScriptedClass;
 import scripting.IScriptedClass.IEventDispatcher;
 import util.SortUtil;
 import util.TweenUtil;
+import mobile.TouchUtil;
 
 enum DialogueState
 {
