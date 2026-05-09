@@ -10,6 +10,8 @@ import openfl.Lib;
 import openfl.events.Event;
 import openfl.display.Sprite;
 import openfl.text.TextFormat;
+import haxe.io.Path;
+import lime.system.System;
 
 import ui.intro.InitState;
 
