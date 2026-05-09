@@ -28,6 +28,7 @@ import flixel.util.FlxDestroyUtil;
 import mobile.Hitbox;
 import mobile.TouchPad;
 import mobile.input.MobileInputManager;
+import play.save.Preferences;
 
 /**
  * ...
@@ -53,12 +54,12 @@ class MobileControls extends FlxTypedSpriteGroup<MobileInputManager>
 			case 3: // HITBOX
 				initControler(3, extra);
 		}
-		alpha = ClientPrefs.controlsAlpha;
+		alpha = Preferences.controlsAlpha;
 	}
 
 	private function initControler(controlMode:Int = 0, ?extra:Bool = true):Void
 	{
-		var extraAction = MobileData.extraActions.get(ClientPrefs.extraButtons);
+		var extraAction = MobileData.extraActions.get(Preferences.extraButtons);
 		if (!extra)
 			extraAction = NONE;
 		switch (controlMode)
