@@ -195,7 +195,7 @@ class Controls extends FlxActionSet
 
 	public static var instance:Controls;
 	
-	public static var isSubstate:Bool = false;;
+	public static var isSubstate:Bool = false;
 	
 	public function new(name, scheme = None)
 	{
