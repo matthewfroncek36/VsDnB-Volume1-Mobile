@@ -181,10 +181,11 @@ class SettingsMenu extends MusicBeatSubstate
 
 	override function closeSubState() {
 		super.closeSubState();
-		persistentUpdate = canInteract = true;
-		removeTouchPad();
-		addTouchPad("LEFT_FULL", "A_B_C");
-		addTouchPadCamera();
+		touchPad.active = touchPad.visible = persistentUpdate = true;
+		new FlxTimer().start(0.1, function(timer:FlxTimer)
+		{
+		    canInteract = true;
+		});
 	}
 	
 	public override function update(elapsed:Float)
