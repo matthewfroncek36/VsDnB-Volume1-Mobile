@@ -1,4 +1,5 @@
 import play.character.CharacterType;
+import play.PlayState;
 
 class PolygonizedEvents extends SongModule
 {
@@ -30,7 +31,7 @@ class PolygonizedEvents extends SongModule
         screenShader.setFloat('uTime', 0);
         screenShader.setBool('uEnabled', false);
         
-        game.qqqeb = true;
+        PlayState.qqqeb = true;
     }
 
     override function onCreateUI(e:ScriptEvent)

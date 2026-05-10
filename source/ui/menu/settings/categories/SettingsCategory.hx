@@ -81,9 +81,9 @@ class SettingsCategory extends FlxSpriteGroup
 	 */
 	public function handleInputs():Void
 	{
-		var upP = PlayerSettings.controls.UP_P || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonUp.justPressed;
-		var downP = PlayerSettings.controls.DOWN_P || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonDown.justPressed;
-		var accept = PlayerSettings.controls.ACCEPT || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonA.justPressed;
+		var upP = PlayerSettings.controls.UP_P || parent.touchPad != null && parent.touchPad.buttonUp.justPressed;
+		var downP = PlayerSettings.controls.DOWN_P || parent.touchPad != null && parent.touchPad.buttonDown.justPressed;
+		var accept = PlayerSettings.controls.ACCEPT || parent.touchPad != null && parent.touchPad.buttonA.justPressed;
 
 		if (upP)
 		{

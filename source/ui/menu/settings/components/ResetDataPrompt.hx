@@ -6,6 +6,7 @@ import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import ui.MusicBeatSubstate;
+import ui.menu.settings.SettingsMenu;
 
 class Prompt extends FlxSpriteGroup
 {
@@ -64,9 +65,9 @@ class Prompt extends FlxSpriteGroup
 		if (!canAnswer)
 			return;
 
-		var leftP = PlayerSettings.controls.LEFT_P || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonLeft.justPressed;
-		var rightP = PlayerSettings.controls.RIGHT_P || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonRight.justPressed;
-		var enter = PlayerSettings.controls.ACCEPT || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonA.pressed;
+		var leftP = PlayerSettings.controls.LEFT_P || SettingsMenu.touchPad != null && SettingsMenu.touchPad.buttonLeft.justPressed;
+		var rightP = PlayerSettings.controls.RIGHT_P || SettingsMenu.touchPad != null && SettingsMenu.touchPad.buttonRight.justPressed;
+		var enter = PlayerSettings.controls.ACCEPT || SettingsMenu.touchPad != null && SettingsMenu.touchPad.buttonA.pressed;
 
 		if (leftP)
 			changeSelection(-1);
