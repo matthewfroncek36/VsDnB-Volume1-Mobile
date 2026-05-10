@@ -246,4 +246,7 @@ class MusicBeatSubstate extends ScriptEventDispatchSubState
 	{
 		sort(SortUtil.byZIndex);
 	}
+	
+	public static function getState():MusicBeatSubstate
+		return cast (FlxG.state, MusicBeatSubstate);
 }
