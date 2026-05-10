@@ -65,9 +65,9 @@ class Prompt extends FlxSpriteGroup
 		if (!canAnswer)
 			return;
 
-		var leftP = PlayerSettings.controls.LEFT_P || SettingsMenu.getState().touchPad != null && SettingsMenu.getState().touchPad.buttonLeft.justPressed;
-		var rightP = PlayerSettings.controls.RIGHT_P || SettingsMenu.getState().touchPad != null && SettingsMenu.getState().touchPad.buttonRight.justPressed;
-		var enter = PlayerSettings.controls.ACCEPT || SettingsMenu.getState().touchPad != null && SettingsMenu.getState().touchPad.buttonA.pressed;
+		var leftP = PlayerSettings.controls.LEFT_P || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonLeft.justPressed;
+		var rightP = PlayerSettings.controls.RIGHT_P || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonRight.justPressed;
+		var enter = PlayerSettings.controls.ACCEPT || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonA.pressed;
 
 		if (leftP)
 			changeSelection(-1);
