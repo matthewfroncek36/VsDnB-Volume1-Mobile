@@ -1,6 +1,7 @@
 package ui.menu.settings;
 
 import controls.PlayerSettings;
+import controls.Controls;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -116,6 +117,8 @@ class SettingsMenu extends MusicBeatSubstate
 
 	public override function create()
 	{
+		Controls.isSubstate = true;
+		
 		super.create();
 
 		new FlxTimer().start(0.5, function(timer:FlxTimer)
@@ -319,6 +322,7 @@ class SettingsMenu extends MusicBeatSubstate
 							onComplete: function(t:FlxTween)
 							{
 								close();
+								Controls.isSubstate = false;
 							}
 						});
 					});
@@ -799,11 +803,11 @@ class SettingsSlider extends FlxSlider
 	{
 		handle.update(elapsed);
 
-		var left = (PlayerSettings.controls.LEFT || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonLeft.pressed);
-		var right = (PlayerSettings.controls.RIGHT || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonRight.pressed);
+		var left = PlayerSettings.controls.LEFT;
+		var right = PlayerSettings.controls.RIGHT;
 
-		var leftR = (PlayerSettings.controls.LEFT_R || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonLeft.justReleased);
-		var rightR = (PlayerSettings.controls.RIGHT_R || MusicBeatSubstate.getState().touchPad != null && MusicBeatSubstate.getState().touchPad.buttonRight.justReleased);
+		var leftR = PlayerSettings.controls.LEFT_R;
+		var rightR = PlayerSettings.controls.RIGHT_R;
 
 		var canInteract = parent.menu.canInteract && parent.canInteract && interactable;
 
@@ -967,11 +971,11 @@ class SelectOption extends SettingsOption
 		if (!canInteract || !menu.canInteract || !selected)
 			return;
 
-		var left = (PlayerSettings.controls.LEFT || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonLeft.pressed);
-		var leftP = (PlayerSettings.controls.LEFT_P || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonLeft.justPressed);
+		var left = PlayerSettings.controls.LEFT;
+		var leftP = PlayerSettings.controls.LEFT_P;
 
-		var right = (PlayerSettings.controls.RIGHT || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonRight.pressed);
-		var rightP = (PlayerSettings.controls.RIGHT_P || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonRight.justPressed);
+		var right = PlayerSettings.controls.RIGHT;
+		var rightP = PlayerSettings.controls.RIGHT_P;
 
 		if (left)
 		{
@@ -1148,11 +1152,11 @@ class NumericStepperOption extends SettingsOption
 		if (!canInteract || !menu.canInteract || !selected)
 			return;
 
-		var left = (PlayerSettings.controls.LEFT || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonLeft.pressed);
-		var leftP = (PlayerSettings.controls.LEFT_P || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonLeft.justPressed);
+		var left = PlayerSettings.controls.LEFT;
+		var leftP = PlayerSettings.controls.LEFT_P;
 
-		var right = (PlayerSettings.controls.RIGHT || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonRight.pressed);
-		var rightP = (PlayerSettings.controls.RIGHT_P || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonRight.justPressed);
+		var right = PlayerSettings.controls.RIGHT;
+		var rightP = PlayerSettings.controls.RIGHT_P;
 
 		if (left)
 		{

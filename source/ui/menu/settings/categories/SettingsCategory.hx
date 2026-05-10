@@ -3,7 +3,6 @@ package ui.menu.settings.categories;
 import controls.PlayerSettings;
 import flixel.group.FlxSpriteGroup;
 import ui.menu.settings.SettingsMenu.SettingsOption;
-import ui.MusicBeatSubstate;
 
 /**
  * A list containers for the available options in the settings menu.
@@ -81,9 +80,9 @@ class SettingsCategory extends FlxSpriteGroup
 	 */
 	public function handleInputs():Void
 	{
-		var upP = PlayerSettings.controls.UP_P || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonUp.justPressed;
-		var downP = PlayerSettings.controls.DOWN_P || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonDown.justPressed;
-		var accept = PlayerSettings.controls.ACCEPT || MusicBeatSubstate.touchPad != null && MusicBeatSubstate.touchPad.buttonA.justPressed;
+		var upP = PlayerSettings.controls.UP_P;
+		var downP = PlayerSettings.controls.DOWN_P;
+		var accept = PlayerSettings.controls.ACCEPT;
 
 		if (upP)
 		{

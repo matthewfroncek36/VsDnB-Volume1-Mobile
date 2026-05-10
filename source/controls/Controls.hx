@@ -195,6 +195,8 @@ class Controls extends FlxActionSet
 
 	public static var instance:Controls;
 	
+	public static var isSubstate:Bool = false;;
+	
 	public function new(name, scheme = None)
 	{
 		instance = this;
@@ -673,7 +675,7 @@ class Controls extends FlxActionSet
 				bools[1] = state.mobileControls.instance.buttonJustPressed(id);
 		}
 
-		if (substate != null)
+		if (substate != null || isSubstate)
 		{
 			if (substate.touchPad != null)
 				bools[2] = substate.touchPad.buttonJustPressed(id);
@@ -700,7 +702,7 @@ class Controls extends FlxActionSet
 				bools[1] = state.mobileControls.instance.buttonJustReleased(id);
 		}
 
-		if (substate != null)
+		if (substate != null || isSubstate)
 		{
 			if (substate.touchPad != null)
 				bools[2] = substate.touchPad.buttonJustReleased(id);
@@ -727,7 +729,7 @@ class Controls extends FlxActionSet
 				bools[1] = state.mobileControls.instance.buttonPressed(id);
 		}
 
-		if (substate != null)
+		if (substate != null || isSubstate)
 		{
 			if (substate.touchPad != null)
 				bools[2] = substate.touchPad.buttonPressed(id);
@@ -755,7 +757,7 @@ class Controls extends FlxActionSet
 				bools[1] = state.mobileControls.instance.buttonReleased(id);
 		}
 
-		if (substate != null)
+		if (substate != null || isSubstate)
 		{
 			if (substate.touchPad != null)
 				bools[2] = substate.touchPad.buttonReleased(id);

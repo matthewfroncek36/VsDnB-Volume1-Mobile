@@ -1445,6 +1445,7 @@ class PlayState extends MusicBeatState
 		}
 		
 		isInCutscene = true;
+		mobileControls.instance.visible = false;
 
 		currentDialogue = DialogueRegistry.instance.fetchEntry(id);
 		if (currentDialogue != null)
@@ -1491,6 +1492,8 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
+		mobileControls.instance.visible = false;
+		
 		camGame.setFollow(gf.cameraFocusPoint.x, gf.cameraFocusPoint.y);
 
 		var black = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
@@ -1527,6 +1530,7 @@ class PlayState extends MusicBeatState
 		}
 		
 		canPause = true;
+		mobileControls.instance.visible = false;
 		SoundController.music.volume = 0;
 		vocals.volume = 0;
 		generatedMusic = false;
