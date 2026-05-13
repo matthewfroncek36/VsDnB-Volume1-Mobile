@@ -985,9 +985,10 @@ class PlayState extends MusicBeatState
 
 			changePresence(NORMAL(true, false));
 			
+			if (shapeNoteSongs.contains(currentSong.id.toLowerCase())) qqqeb = true;
 			removeMobileControls();
 			addMobileControls();
-			mobileControls.instance.visible = true;
+			if (!isInCutscene) mobileControls.instance.visible = true;
 		}
 
 		super.closeSubState();
