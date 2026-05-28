@@ -16,10 +16,8 @@
       },
       {
          "name": "openfl",
-         "type": "git",
-         "dir": null,
-         "ref": "master",
-         "url": "https://github.com/T5mpler/openfl-dnb"
+         "type": "haxelib",
+         "version": null
       },
       {
          "name": "lime",
