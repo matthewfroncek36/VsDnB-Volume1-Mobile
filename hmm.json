@@ -87,8 +87,8 @@
          "name": "polymod",
          "type": "git",
          "dir": null,
-         "ref": "d2d73608e63cf8c6672a19568557fa0ab7882628",
-         "url": "https://github.com/T5mpler/polymod-dnb.git"
+         "ref": "main",
+         "url": "https://github.com/froncekmatthew173-bot/polymod-dnb.git"
       },
       {
          "name": "json2object",
