@@ -66,6 +66,7 @@ class MasterEvents extends SongModule
                 game.dad.canDance = false;
                 game.dad.playAnim('die', true);
                 SoundController.play(Paths.sound('dead'), 1);
+                iconP2.char = 'boom'; 
         }
     }
 
