@@ -98,6 +98,7 @@ class HudDisplay extends FlxSpriteGroup implements IHudItem
 	 */
 	public var textUpdateFunc:Float->Void;
 
+	public var botText(default, null):FlxText;
 	public function new(x:Float, params:HudDisplayParams)
 	{
 		if (params == null)
@@ -128,6 +129,24 @@ class HudDisplay extends FlxSpriteGroup implements IHudItem
 		text.antialiasing = true;
 		add(text);
 		text.setPosition(icon.x + icon.width + 5, icon.y - (text.textField.height - icon.height) / 2);
+		
+		// =========================================================
+		// BOTPLAY HUD TEXT (Psych Engine Style)
+		// =========================================================
+		botText = new FlxText(0, 0, 0, "BOTPLAY", 32);
+		botText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, OUTLINE, FlxColor.BLACK);
+		botText.borderSize = 2;
+		botText.scrollFactor.set();
+		botText.cameras = [camHUD];
+		botText.visible = Preferences.botplay;
+		botText.y = Preferences.downscroll ? 600 : 40;
+
+		botText.screenCenter(X);
+
+		// Only visible if botplay is enabled
+		botText.visible = Preferences.botplay;
+
+		add(botText);
 	}
 
 	public override function update(elapsed:Float)
