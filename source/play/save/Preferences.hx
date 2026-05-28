@@ -54,6 +54,7 @@ class Preferences
 		
 		'hitboxType' => 'Gradient',
 		'extraButtons' => 'NONE',
+		'botplay' => false,
 	];
 
 	/**
