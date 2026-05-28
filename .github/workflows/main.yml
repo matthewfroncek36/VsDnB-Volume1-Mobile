@@ -1,32 +1,23 @@
-# THE FOLLOWING ACTIONS CODE IS FROM THE PSYCH ENGINE REPO: https://github.com/ShadowMario/FNF-PsychEngine/blob/main/.github/workflows/main.yml
-
 name: Build
 
-# Controls when the action will run.
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   pull_request:
     branches: [ main ]
   push:
     branches: [ main ]
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   buildLinux:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4.1.7
 
       - uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.3.4
-      # Runs a set of commands using the runners shell
+
       - name: Install Haxelib
         run: |
           sudo apt-get install libvlc-dev libvlccore-dev glibc-source libidn-dev libidn12
@@ -36,30 +27,34 @@ jobs:
           haxelib run hmm install
           haxelib install hxvlc 2.2.6
           haxelib list
+
       - name: Create Version Tag
-        run: echo "${{github.run_id}}" > VERSION
+        run: echo "${{ github.run_id }}" > VERSION
+
       - name: Compile
-        run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id }}"
+
       - name: Publish Artifact
         uses: actions/upload-artifact@v4
         with:
           name: linuxBuild
-          path: 'export/release/linux/bin'
+          path: export/release/linux/bin
+
   buildWindows:
     runs-on: windows-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4.1.7
 
       - uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.3.4
+
       - name: Setup Haxe Path
         run: |
           setx HAXEPATH "C:\HaxeToolkit\haxe"
           setx PATH "%HAXEPATH%;%PATH%"
-      # Runs a set of commands using the runners shell
+
       - name: Install Haxelib
         run: |
           haxelib setup C:/haxelib
@@ -68,26 +63,29 @@ jobs:
           haxelib run hmm install
           haxelib install hxvlc 2.2.6
           haxelib list
+
       - name: Create Version Tag
-        run: echo "${{github.run_id}}" > VERSION
+        run: echo "${{ github.run_id }}" > VERSION
+
       - name: Compile
-        run: haxelib run lime build windows --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build windows --app-version="4.0.0-${{ github.run_id }}"
+
       - name: Publish Artifact
         uses: actions/upload-artifact@v4
         with:
           name: windowsBuild
           path: export/release/windows/bin
+
   buildMac:
     runs-on: macos-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4.1.7
 
       - uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.3.4
-      # Runs a set of commands using the runners shell
+
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
@@ -96,12 +94,74 @@ jobs:
           haxelib run hmm install
           haxelib install hxvlc 2.2.6
           haxelib list
+
       - name: Create Version Tag
-        run: echo "${{github.run_id}}" > VERSION
+        run: echo "${{ github.run_id }}" > VERSION
+
       - name: Compile
-        run: haxelib run lime build mac --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build mac --app-version="4.0.0-${{ github.run_id }}"
+
       - name: Publish Artifact
         uses: actions/upload-artifact@v4
         with:
           name: macBuild
           path: export/release/macos/bin
+
+  android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Haxe
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.3.4
+
+      - name: Install Dependencies
+        run: |
+          haxelib install hmm
+          haxelib run hmm setup
+          haxelib run hmm install
+          haxelib install hxvlc 2.2.6
+          haxelib run lime setup android --accept
+          haxelib list
+
+      - name: Build Android ARM64
+        run: haxelib run lime build android -final -Dandroid-arm64
+
+      - name: Upload Android Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Android-ARM64
+          path: export/android/bin/app/build/outputs/**/*.apk
+
+  ios:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Haxe
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.3.4
+
+      - name: Install Dependencies
+        run: |
+          haxelib install hmm
+          haxelib run hmm setup
+          haxelib run hmm install
+          haxelib install hxvlc 2.2.6
+          haxelib list
+
+      - name: Build iOS (Device)
+        run: haxelib run lime build ios -final -Dios-device
+
+      - name: Upload iOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: iOS-arm64
+          path: export/ios/build/**/*.ipa
