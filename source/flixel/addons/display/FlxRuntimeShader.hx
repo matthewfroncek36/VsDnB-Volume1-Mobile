@@ -1,4 +1,3 @@
-#if FLXRUNTIMESHADER
 package flixel.addons.display;
 
 import flixel.system.FlxAssets.FlxShader;
@@ -328,4 +327,3 @@ class FlxRuntimeShader extends FlxShader
 		return 'FlxRuntimeShader';
 	}
 }
-#end
