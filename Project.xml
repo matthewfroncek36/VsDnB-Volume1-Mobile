@@ -123,6 +123,7 @@
 	
 	<haxedef name="openfl-enable-handle-error" />
 	<haxedef name="analyzer-optimize" />
+	<haxedef name="lime_disable_sdl" />
 	
 	<!-- No Dead Code Elimination -->
 	<haxeflag name="-dce no" />
