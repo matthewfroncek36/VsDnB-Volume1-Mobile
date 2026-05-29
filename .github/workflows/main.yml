@@ -26,6 +26,7 @@ jobs:
           haxelib run hmm setup
           haxelib run hmm install
           haxelib install hxvlc 2.2.6
+          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
           haxelib list
 
       - name: Create Version Tag
@@ -93,6 +94,7 @@ jobs:
           haxelib run hmm setup
           haxelib run hmm install
           haxelib install hxvlc 2.2.6
+          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
           haxelib list
 
       - name: Create Version Tag
@@ -125,6 +127,7 @@ jobs:
           haxelib run hmm setup
           haxelib run hmm install
           haxelib install hxvlc 2.2.6
+          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
           haxelib run lime setup android --accept
           haxelib list
 
@@ -154,6 +157,7 @@ jobs:
           haxelib install hmm
           haxelib run hmm setup
           haxelib run hmm install
+          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
           haxelib install hxvlc 2.2.6
           haxelib list
 
