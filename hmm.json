@@ -3,36 +3,28 @@
       {
          "name": "flixel",
          "type": "git",
-         "dir": null,
          "ref": "f2dc7ba3b7c3fc3fcb4991577571c3dfc4f51cae",
          "url": "https://github.com/T5mpler/flixel-dnb"
       },
       {
          "name": "flixel-addons",
          "type": "git",
-         "dir": null,
          "ref": "75a25a3adfe6c50690444e3af54cc0ed341b3274",
          "url": "https://github.com/T5mpler/flixel-addons-dnb"
       },
       {
          "name": "openfl",
-         "type": "git",
-         "dir": null,
-         "ref": "74d8f72890b9ae70bba589d034ea35b86588e548",
-         "url": "https://github.com/T5mpler/openfl-dnb"
+         "type": "haxelib",
+         "version": "9.3.3"
       },
       {
          "name": "lime",
-         "type": "git",
-         "dir": null,
-         "ref": "main",
-         "url": "https://github.com/QQQEB159/lime-8.2.2"
+         "type": "haxelib",
+         "version": "8.2.2"
       },
-
       {
          "name": "hxvlc",
-         "type": "haxelib",
-         "version": null
+         "type": "haxelib"
       },
       {
          "name": "hxdiscord_rpc",
@@ -42,21 +34,17 @@
       {
          "name": "hxcpp",
          "type": "git",
-         "dir": null,
          "ref": "main",
          "url": "https://github.com/ShadowEngineTeam/hxcpp"
       },
       {
          "name": "format",
-         "type": "haxelib",
-         "version": null
+         "type": "haxelib"
       },
       {
          "name": "hxp",
-         "type": "haxelib",
-         "version": null
+         "type": "haxelib"
       },
-
       {
          "name": "grig.audio",
          "type": "git",
@@ -67,57 +55,48 @@
       {
          "name": "funkin.vis",
          "type": "git",
-         "dir": null,
          "ref": "main",
          "url": "https://github.com/T5mpler/funkVis-dnb.git"
       },
       {
          "name": "flixel-animate",
          "type": "git",
-         "dir": null,
          "ref": "aae07578e60a83347e8189af1b312d69d05215b8",
          "url": "https://github.com/MaybeMaru/flixel-animate.git"
       },
       {
          "name": "hscript",
          "type": "git",
-         "dir": null,
          "ref": "dfa1f291224942a585e412fd0a2d3b14e1370980",
          "url": "https://github.com/T5mpler/hscript-dnb.git"
       },
       {
          "name": "polymod",
          "type": "git",
-         "dir": null,
-         "ref": "d2d73608e63cf8c6672a19568557fa0ab7882628",
+         "ref": "main",
          "url": "https://github.com/T5mpler/polymod-dnb.git"
       },
       {
          "name": "json2object",
          "type": "git",
-         "dir": null,
          "ref": "a8c26f18463c98da32f744c214fe02273e1823fa",
          "url": "https://github.com/FunkinCrew/json2object"
       },
-
       {
          "name": "thx.core",
          "type": "git",
-         "dir": null,
          "ref": "master",
          "url": "https://github.com/fponticelli/thx.core.git"
       },
       {
          "name": "jsonpatch",
          "type": "git",
-         "dir": null,
          "ref": "f9b83215acd586dc28754b4ae7f69d4c06c3b4d3",
          "url": "https://github.com/EliteMasterEric/jsonpatch"
       },
       {
          "name": "jsonpath",
          "type": "git",
-         "dir": null,
          "ref": "7a24193717b36393458c15c0435bb7c4470ecdda",
          "url": "https://github.com/EliteMasterEric/jsonpath"
       }

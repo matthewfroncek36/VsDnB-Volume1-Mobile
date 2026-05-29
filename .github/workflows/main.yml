@@ -1,0 +1,199 @@
+name: Multi Platform Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  buildAndroid:
+    name: Android Build
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ShadowEngineTeam/setup-haxe@main
+        with:
+          haxe-version: 4.3.7
+
+      - name: Setup Haxe/Haxelib
+        run: |
+          echo "HAXEPATH=$(dirname $(which haxe))" >> "$GITHUB_ENV"
+          haxelib setup "$HOME/haxelib"
+          haxelib install hmm --quiet
+          haxelib run hmm install
+
+      - name: Setup Lime Android
+        run: |
+          haxelib run lime config ANDROID_SDK "$ANDROID_HOME"
+          haxelib run lime config ANDROID_NDK_ROOT "$ANDROID_NDK_LATEST_HOME"
+          haxelib run lime config JAVA_HOME "$JAVA_HOME_21_arm64"
+          haxelib run lime config ANDROID_SETUP true
+
+      - name: Build Android
+        run: haxelib run lime build android -ONLY_ARM64
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AndroidBuild
+          path: export/release/android/bin/app/build/outputs/apk/release/*.apk
+          if-no-files-found: warn
+
+  buildWindows:
+    name: Windows Build
+    runs-on: windows-2022
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ShadowEngineTeam/setup-haxe@main
+        with:
+          haxe-version: 4.3.7
+
+      - name: Setup Haxe/Haxelib
+        shell: pwsh
+        run: |
+          $haxePath = Split-Path (Get-Command haxe).Source
+          "HAXEPATH=$haxePath" | Out-File -FilePath $env:GITHUB_ENV -Append
+          haxelib setup C:\haxelib
+
+          $libs = @(
+            "openfl",
+            "lime",
+            "polymod",
+            "hxcpp",
+            "flixel",
+            "flixel-addons",
+            "flixel-animate",
+            "hscript",
+            "json2object",
+            "jsonpatch",
+            "jsonpath",
+            "funkin.vis",
+            "grig.audio",
+            "thx.core"
+          )
+
+          foreach ($lib in $libs) {
+            $path = "C:\haxelib\$lib"
+            if (Test-Path $path) {
+              Remove-Item $path -Recurse -Force -ErrorAction SilentlyContinue
+            }
+          }
+
+          haxelib install hmm --quiet
+          haxelib run hmm install
+
+      - name: Build Windows
+        shell: pwsh
+        run: haxelib run lime build windows
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WindowsBuild
+          path: export/release/windows/bin/**
+          if-no-files-found: warn
+
+  buildLinux:
+    name: Linux Build
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ShadowEngineTeam/setup-haxe@main
+        with:
+          haxe-version: 4.3.7
+
+      - name: Install Linux packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libvlc-dev \
+            libvlccore-dev \
+            vlc \
+            libasound2-dev \
+            libx11-dev \
+            libxext-dev \
+            libxi-dev \
+            libxinerama-dev \
+            libxrandr-dev \
+            libgl1-mesa-dev \
+            libglu1-mesa-dev
+
+      - name: Setup Haxe/Haxelib
+        run: |
+          echo "HAXEPATH=$(dirname $(which haxe))" >> "$GITHUB_ENV"
+          haxelib setup "$HOME/haxelib"
+          haxelib install hmm --quiet
+          haxelib run hmm install
+
+      - name: Build Linux
+        run: haxelib run lime build linux
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LinuxBuild
+          path: export/release/linux/bin/**
+          if-no-files-found: warn
+
+  buildMac:
+    name: macOS Build
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ShadowEngineTeam/setup-haxe@main
+        with:
+          haxe-version: 4.3.7
+
+      - name: Setup Haxe/Haxelib
+        run: |
+          echo "HAXEPATH=$(dirname $(which haxe))" >> "$GITHUB_ENV"
+          haxelib setup "$HOME/haxelib"
+          haxelib install hmm --quiet
+          haxelib run hmm install
+
+      - name: Build macOS
+        run: haxelib run lime build mac
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MacBuild
+          path: |
+            export/release/macos/bin/**
+            export/release/mac/bin/**
+          if-no-files-found: warn
+
+  buildIOS:
+    name: iOS Build
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ShadowEngineTeam/setup-haxe@main
+        with:
+          haxe-version: 4.3.7
+
+      - name: Setup Haxe/Haxelib
+        run: |
+          echo "HAXEPATH=$(dirname $(which haxe))" >> "$GITHUB_ENV"
+          haxelib setup "$HOME/haxelib"
+          haxelib install hmm --quiet
+          haxelib run hmm install
+
+      - name: Build iOS Project
+        run: haxelib run lime build ios
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iOSBuild
+          path: |
+            export/release/ios/**
+            export/ios/**
+          if-no-files-found: warn
