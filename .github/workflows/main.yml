@@ -7,6 +7,16 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+# ---------------------------------------------------------
+# GLOBAL CACHE KEY
+# ---------------------------------------------------------
+env:
+  HAXE_VERSION: 4.3.4
+  LIME_VERSION: latest
+
+# ---------------------------------------------------------
+# REUSABLE STEPS
+# ---------------------------------------------------------
 jobs:
   buildLinux:
     runs-on: ubuntu-latest
@@ -14,158 +24,219 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.7
 
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.haxelib
+            ~/.lime
+            ~/.cache/haxelib
+          key: haxe-linux-${{ hashFiles('hmm.json') }}
+
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.4
+          haxe-version: ${{ env.HAXE_VERSION }}
 
-      - name: Install Haxelib
+      - name: Install System Dependencies
         run: |
-          sudo apt-get install libvlc-dev libvlccore-dev glibc-source libidn-dev libidn12
+          sudo apt-get update
+          sudo apt-get install -y libvlc-dev libvlccore-dev glibc-source libidn-dev libidn12
+
+      - name: Install Haxelib Dependencies
+        run: |
           haxelib setup ~/haxelib
+          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
           haxelib install hmm
           haxelib run hmm setup
           haxelib run hmm install
           haxelib install hxvlc 2.2.6
-          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
+          haxelib run lime rebuild linux
           haxelib list
 
       - name: Create Version Tag
         run: echo "${{ github.run_id }}" > VERSION
 
-      - name: Compile
+      - name: Compile Linux
         run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id }}"
 
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: linuxBuild
           path: export/release/linux/bin
 
+  # ---------------------------------------------------------
+  # WINDOWS
+  # ---------------------------------------------------------
   buildWindows:
     runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4.1.7
 
+      - uses: actions/cache@v4
+        with:
+          path: |
+            C:/haxelib
+          key: haxe-windows-${{ hashFiles('hmm.json') }}
+
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.4
+          haxe-version: ${{ env.HAXE_VERSION }}
 
-      - name: Setup Haxe Path
-        run: |
-          setx HAXEPATH "C:\HaxeToolkit\haxe"
-          setx PATH "%HAXEPATH%;%PATH%"
+      - name: Fix PATH
+        run: echo "C:\HaxeToolkit\haxe" >> $env:GITHUB_PATH
 
-      - name: Install Haxelib
+      - name: Install Haxelib Dependencies
         run: |
           haxelib setup C:/haxelib
+          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
           haxelib install hmm
           haxelib run hmm setup
           haxelib run hmm install
           haxelib install hxvlc 2.2.6
+          haxelib run lime rebuild windows
           haxelib list
 
       - name: Create Version Tag
         run: echo "${{ github.run_id }}" > VERSION
 
-      - name: Compile
+      - name: Compile Windows
         run: haxelib run lime build windows --app-version="4.0.0-${{ github.run_id }}"
 
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: windowsBuild
           path: export/release/windows/bin
 
+  # ---------------------------------------------------------
+  # MACOS
+  # ---------------------------------------------------------
   buildMac:
-    runs-on: macos-latest
+    runs-on: macos-13
 
     steps:
       - uses: actions/checkout@v4.1.7
 
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.haxelib
+            ~/.lime
+            ~/.cache/haxelib
+          key: haxe-macos-${{ hashFiles('hmm.json') }}
+
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.4
+          haxe-version: ${{ env.HAXE_VERSION }}
 
-      - name: Install Haxelib
+      - name: Install Haxelib Dependencies
         run: |
           haxelib setup ~/haxelib
+          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
           haxelib install hmm
           haxelib run hmm setup
           haxelib run hmm install
           haxelib install hxvlc 2.2.6
-          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
+          haxelib run lime rebuild mac
           haxelib list
 
       - name: Create Version Tag
         run: echo "${{ github.run_id }}" > VERSION
 
-      - name: Compile
+      - name: Compile macOS
         run: haxelib run lime build mac --app-version="4.0.0-${{ github.run_id }}"
 
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: macBuild
           path: export/release/macos/bin
 
+  # ---------------------------------------------------------
+  # ANDROID
+  # ---------------------------------------------------------
   buildAndroid:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install Haxe
-        uses: krdlab/setup-haxe@master
+      - uses: actions/cache@v4
         with:
-          haxe-version: 4.3.4
+          path: |
+            ~/.haxelib
+            ~/.lime
+            ~/.cache/haxelib
+          key: haxe-android-${{ hashFiles('hmm.json') }}
 
-      - name: Install Dependencies
+      - uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: ${{ env.HAXE_VERSION }}
+
+      - name: Install Java + Android SDK
         run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-17-jdk
+          yes | sdkmanager --licenses
+          sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2" "ndk;25.2.9519653"
+
+      - name: Install Haxelib Dependencies
+        run: |
+          haxelib setup ~/haxelib
+          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
           haxelib install hmm
           haxelib run hmm setup
           haxelib run hmm install
           haxelib install hxvlc 2.2.6
-          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
           haxelib run lime setup android --accept
+          haxelib run lime rebuild android
           haxelib list
 
       - name: Build Android ARM64
         run: haxelib run lime build android -final -Dandroid-arm64
 
-      - name: Upload Android Artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: Android-ARM64
           path: export/android/bin/app/build/outputs/**/*.apk
 
+  # ---------------------------------------------------------
+  # IOS
+  # ---------------------------------------------------------
   buildIos:
     runs-on: macos-14
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install Haxe
-        uses: krdlab/setup-haxe@master
+      - uses: actions/cache@v4
         with:
-          haxe-version: 4.3.4
+          path: |
+            ~/.haxelib
+            ~/.lime
+            ~/.cache/haxelib
+          key: haxe-ios-${{ hashFiles('hmm.json') }}
 
-      - name: Install Dependencies
+      - uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: ${{ env.HAXE_VERSION }}
+
+      - name: Prepare Xcode
+        run: sudo xcode-select --switch /Applications/Xcode.app
+
+      - name: Install Haxelib Dependencies
         run: |
+          haxelib setup ~/haxelib
+          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
           haxelib install hmm
           haxelib run hmm setup
           haxelib run hmm install
-          haxelib git polymod https://github.com/froncekmatthew173-bot/polymod-dnb.git main
           haxelib install hxvlc 2.2.6
+          haxelib run lime rebuild ios
           haxelib list
 
       - name: Build iOS (Device)
         run: haxelib run lime build ios -final -Dios-device
 
-      - name: Upload iOS Artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: iOS-arm64
-          path: export/ios/build/**/*.ipa
+          path: export/ios/build/Release-iphoneos/*.ipa
