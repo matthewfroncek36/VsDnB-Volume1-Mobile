@@ -41,7 +41,7 @@ jobs:
         run: |
           haxelib install hmm
           haxelib run hmm setup
-          hmm install
+          haxelib run hmm install
 
       - name: Compile Linux
         run: haxelib run lime build linux
@@ -72,7 +72,7 @@ jobs:
         run: |
           haxelib install hmm
           haxelib run hmm setup
-          hmm install
+          haxelib run hmm install
 
       - name: Compile macOS
         run: haxelib run lime build mac
@@ -105,7 +105,7 @@ jobs:
         run: |
           haxelib install hmm
           haxelib run hmm setup
-          hmm install
+          haxelib run hmm install
 
       - name: Compile iOS Project
         run: haxelib run lime build ios
@@ -145,10 +145,10 @@ jobs:
           try {
             haxelib run hmm setup
           } catch {
-            Write-Host "hmm setup failed; continuing with direct hmm install"
+            Write-Host "hmm setup failed; continuing with direct haxelib run hmm install"
           }
 
-          hmm install
+          haxelib run hmm install
 
       - name: Compile Windows
         shell: pwsh
